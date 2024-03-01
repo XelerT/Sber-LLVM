@@ -131,16 +131,29 @@ class my_lexer_t : public yyFlexLexer
                 return yy::parser::token_type::ELSE;
         }
 
-        int make_output () 
+        int make_print () 
         {
                 lex_type = "iostream";
-                return yy::parser::token_type::OUTPUT;
+                return yy::parser::token_type::PRINT;
+        }
+
+
+        int make_println () 
+        {
+                lex_type = "iostream";
+                return yy::parser::token_type::PRINTLN;
         }
 
         int make_input () 
         {
                 lex_type = "iostream";
                 return yy::parser::token_type::INPUT;
+        }
+
+        int make_then () 
+        {
+                lex_type = "SYNT";
+                return yy::parser::token_type::THEN;
         }
 
         int make_op_pr () 
@@ -191,6 +204,12 @@ class my_lexer_t : public yyFlexLexer
                 return yy::parser::token_type::TYPE_ID;
         }
 
+        int make_string () 
+        {
+                lex_type = "string";
+                return yy::parser::token_type::STRING;
+        }
+
         int make_and () 
         {
                 lex_type = "cond_operator";
@@ -207,5 +226,17 @@ class my_lexer_t : public yyFlexLexer
         {
                 lex_type = "negative";
                 return yy::parser::token_type::NEGATIVE;
+        }
+
+        int make_true () 
+        {
+                lex_type = "bool";
+                return yy::parser::token_type::TRUE;
+        }
+
+        int make_false () 
+        {
+                lex_type = "false";
+                return yy::parser::token_type::FALSE;
         }
 };

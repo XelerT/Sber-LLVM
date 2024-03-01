@@ -75,7 +75,7 @@ class driver_t
                         dr_config_->input.clear();
                         dr_config_->input.seekg(0, std::ios::beg);
                 }
-                int a = 0;
+
                 parser::token_type yylex (parser::semantic_type* yylval, parser::location_type* loc) 
                 {
                         parser::token_type tt = static_cast<parser::token_type>(plex_->yylex(loc));
@@ -98,7 +98,8 @@ class driver_t
                                 case ptt::IF:        std::cout << "IF";            break;        
                                 case ptt::ELSE:      std::cout << "ELSE";          break;        
                                 case ptt::WHILE:     std::cout << "WHILE";         break;        
-                                case ptt::OUTPUT:    std::cout << "OUTPUT";        break;        
+                                case ptt::PRINT:     std::cout << "OUTPUT";        break;        
+                                case ptt::PRINTLN:   std::cout << "OUTPUT";        break;        
                                 case ptt::INPUT:     std::cout << "INPUT";         break;        
                                 case ptt::ASSIGN:    std::cout << "ASSIGN";        break;        
                                 case ptt::SCOLON:    std::cout << "SCOLON";        break;        
@@ -110,6 +111,7 @@ class driver_t
                                 case ptt::MINUS:     std::cout << "MINUS";         break;        
                                 case ptt::DIV:       std::cout << "DIV";           break;        
                                 case ptt::MODULO:    std::cout << "MODULO";        break;        
+                                case ptt::THEN:      std::cout << "SYNT";          break;        
                                 case ptt::OP_PR:     std::cout << "OP_PR";         break;        
                                 case ptt::CL_PR:     std::cout << "CL_PR";         break;        
                                 case ptt::EQUAL:     std::cout << "EQUAL";         break;        
@@ -123,8 +125,9 @@ class driver_t
                                 case ptt::CL_BR:     std::cout << "CL_BR";         break;        
                                 case ptt::AND:       std::cout << "AND";           break;        
                                 case ptt::OR:        std::cout << "OR";            break;
-                                case ptt::ERR:       std::cout << "You have some \
-                                                                   syntax errors:"; break;  
+                                case ptt::TRUE:      std::cout << "TRUE";          break;
+                                case ptt::FALSE:     std::cout << "FALSE";         break;
+                                case ptt::ERR:       std::cout << "You have some syntax errors:"; break;  
                                 case 0:                                             break;     
                                 default:             std::cout << "UNKOWN TOKEN!";  break;        
                         }

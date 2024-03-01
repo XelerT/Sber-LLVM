@@ -5,6 +5,7 @@
 
 %{
 #include "lexer.hpp"
+int n_comments = 0;
 %}
 
 WS      [ \v]
@@ -15,6 +16,17 @@ DIGIT   [0-9]
 DIGIT1  [1-9]
 ID      [a-z][a-zA-Z_0-9]*
 TYPE_ID [A-Z][a-zA-Z_0-9]*
+
+STRING ["\""][a-zA-Z_0-9]*LINE*WS*["\""]
+
+IF      ["i"|"I"]["f"|"F"]
+THEN    ["t"|"T"]["h"|"H"]["e"|"E"]["n"|"N"]
+ELSE    ["e"|"E"]["l"|"L"]["s"|"S"]["e"|"E"]
+WHILE   ["w"|"W"]["h"|"H"]["i"|"I"]["l"|"L"]["e"|"E"]
+PRINT   ["p"|"P"]["r"|"R"]["i"|"I"]["n"|"N"]["t"|"T"]
+PRINTLN ["p"|"P"]["r"|"R"]["i"|"I"]["n"|"N"]["t"|"T"]["l"|"L"]["n"|"N"]
+
+%s IN_COMMENT
 
 %%
 
@@ -29,6 +41,16 @@ TYPE_ID [A-Z][a-zA-Z_0-9]*
 {LINE}            {loc->lines(yyleng); loc->step();};
 {I_LOVE_WINDOWS}  {};
 
+"/*" { BEGIN(IN_COMMENT);}
+<IN_COMMENT>
+{
+    "*/"      n_comments--; if (!n_comments) BEGIN(INITIAL);
+    "/*"      n_comments++;
+    [^*\n]+
+    "*"    
+    \n        yylineno++;
+}
+
 "+"               {return make_plus();};
 "-"               {return make_minus();};
 "*"               {return make_mul();};
@@ -42,10 +64,14 @@ TYPE_ID [A-Z][a-zA-Z_0-9]*
 ">"               {return make_greater();};
 "<"               {return make_less();};
 "="               {return make_assign();};
-"if"              {return make_if();};
-"else"            {return make_else();};
-"while"           {return make_while();};
-"print"           {return make_output();};
+{IF}              {return make_if();};
+{THEN}            {return make_then();};
+{ELSE}            {return make_else();};
+{WHILE}           {return make_while();};
+{PRINT}           {return make_print();};
+{PRINTLN}         {return make_println();};
+"true"            {return make_true();};
+"false"           {return make_false();};
 "!"               {return make_negative();};
 "?"               {return make_input();};
 "("               {return make_op_pr();};
@@ -59,6 +85,7 @@ TYPE_ID [A-Z][a-zA-Z_0-9]*
 {TYPE_ID}         {return make_type_id();};
 {DIGIT1}{DIGIT}*  {return make_num();};
 {DIGIT}           {return make_num();};
+{STRING}          {return make_string();};
 .			      {return make_err();};
 
 

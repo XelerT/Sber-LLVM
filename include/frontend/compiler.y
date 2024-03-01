@@ -31,35 +31,43 @@ parser::token_type yylex(parser::semantic_type* yylval, parser::location_type* l
 //-----------------------------------------------------------------------------------------
 
 %token
-    IF       "if"
-    ELSE     "else"
-    WHILE    "while"
-    OUTPUT   "print"
-    INPUT    "?"
-    ASSIGN   "="
-    SCOLON   ";"
+    <std::string> IF 
+    <std::string> ELSE
+    <std::string> WHILE    
+    <std::string> PRINT    
+    <std::string> PRINTLN    
+    <std::string> THEN
+    
+    INPUT     "?"
+    ASSIGN    "="
+    SCOLON    ";"
     <std::string> ID
     <std::string> TYPE_ID
+    <std::string> STRING
     <int> NUMBER
-    MUL      "*"
-    PLUS     "+"
-    MINUS    "-"
-    DIV      "/"
-    MODULO   "%"
-    OP_PR    "("
-    CL_PR    ")"
-    EQUAL    "=="
+    MUL       "*"
+    PLUS      "+"
+    MINUS     "-"
+    DIV       "/"
+    MODULO    "%"
+    OP_PR     "("
+    CL_PR     ")"
+    EQUAL     "=="
     NOT_EQUAL "!="
-    GREATER  ">"
-    NEGATIVE "!"
-    LESS     "<"
-    LS_EQUAL "<="
-    GR_EQUAL ">="
-    OP_BR    "{"
-    CL_BR    "}"
+    GREATER   ">"
+    NEGATIVE  "!"
+    LESS      "<"
+    LS_EQUAL  "<="
+    GR_EQUAL  ">="
+    OP_BR     "{"
+    CL_BR     "}"
 
     AND      "&&"
     OR       "||"
+
+    TRUE     "true"
+    FALSE    "false"
+
     ERR
 ;
 
@@ -137,7 +145,7 @@ lvalue: ID                 {}
 
 //------------------------EXPRESSIONS_INSTRUCTIONS-----------------------------------------
 
-condition: OP_PR expr CL_PR {};
+condition: expr THEN {};
 ;
 
 comp: expr EQUAL     expr {}
@@ -151,8 +159,9 @@ comp: expr EQUAL     expr {}
 ;
 
 expr: NUMBER           {}
+    | STRING      expr {}
     | ID               {}
-    | TYPE_ID   expr   {}
+    | TYPE_ID     expr {}
     | expr PLUS   expr {}
     | expr MINUS  expr {}
     | expr MUL    expr {}
@@ -168,8 +177,9 @@ expr: NUMBER           {}
 
 //------------------------IO_INSTRUCTIONS--------------------------------------------------
 
-output: OUTPUT expr {}
-input : INPUT       {}
+output: PRINT   expr {}
+      | PRINTLN expr {}
+input : INPUT      {}
 
 
 
