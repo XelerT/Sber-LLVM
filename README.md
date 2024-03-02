@@ -1,41 +1,23 @@
 # Sber Stasyan
 
-Required programs:
+### About
 
-- Cmake version  3.21
+This is first task at Sber Compilers additional semester class. Flex and Bison were used to parse and track syntaxes errors.
+
+
+### Requirements
+
+- Cmake version  3.13.4
 - Flex
 - Bison
 
 
-# Install and run
-```
-> git clone https://gitlab.com/taranov.sasha2004/paracl
-> mkdir build
-> cd build
-```
-#### How to run ParaCL?
-
-```
-> cmake ..
-> make
-> ./paracl ../name_of_file
-
-```
-
-# Tests
-Required programs:
-
-- Python
-- Google tests
+### Install & Build
+        $ git clone https://github.com/XelerT/Sber-LLVM.git
+        $ cd Sber-LLVM/
+        $ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build
+### Run
+        $ cd build/
+        $ ./stasyan input_file.txt
 
 
-### How to run end to end tests?
-Run this command from directory with ```paracl``` binary
-```
-> python tests/e2e/e2e_tests.py
-
-```
-
-
-
----

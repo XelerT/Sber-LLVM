@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.13.4)
-project(paracl)
+project(stasyan)
 
 # Build flags
 include(cmake/build_flags.cmake)

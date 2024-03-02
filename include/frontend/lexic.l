@@ -26,7 +26,7 @@ PRINTLN ["p"|"P"]["r"|"R"]["i"|"I"]["n"|"N"]["t"|"T"]["l"|"L"]["n"|"N"]
 
 STRING \"[^\n"]*\"
 
-LINE_COMMENT [/][/]
+LINE_COMMENT [-][-]
 
 %s IN_COMMENT
 
