@@ -24,16 +24,15 @@ class driver_config_t
                 std::istream& input = std::cin;
 
                 driver_config_t () {};
-                driver_config_t (const int argc, char** argv) :
+                driver_config_t (int argc, const char** argv) :
                                 f_input(get_f_input(argc, argv)), input(f_input) 
                 {
 
-                        if (!input.good()) {
-                                throw ("ParaCl: No such file or directory: " + std::string(argv[1]));
-                        }
+                        if (!input.good())
+                                throw (std::runtime_error("Stasyan: No such file or directory: " + std::string(argv[1])));
                 }
 
-                std::ifstream get_f_input (const int argc, char** argv) 
+                std::ifstream get_f_input (int argc, const char** argv) 
                 {
                         for (int i = 1; i < argc; i++) {
                                 std::string arg = argv[i];
