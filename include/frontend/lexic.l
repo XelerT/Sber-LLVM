@@ -11,13 +11,11 @@ int n_comments = 0;
 WS      [ \v]
 TABUL   [\t]
 LINE    [\n]+
-I_LOVE_WINDOWS [\r]+
+WINDOWS_R_LINE [\r]+
 DIGIT   [0-9]
 DIGIT1  [1-9]
 ID      [a-z][a-zA-Z_0-9]*
 TYPE_ID [A-Z][a-zA-Z_0-9]*
-
-STRING ["\""][a-zA-Z_0-9]*LINE*WS*["\""]
 
 IF      ["i"|"I"]["f"|"F"]
 THEN    ["t"|"T"]["h"|"H"]["e"|"E"]["n"|"N"]
@@ -25,6 +23,8 @@ ELSE    ["e"|"E"]["l"|"L"]["s"|"S"]["e"|"E"]
 WHILE   ["w"|"W"]["h"|"H"]["i"|"I"]["l"|"L"]["e"|"E"]
 PRINT   ["p"|"P"]["r"|"R"]["i"|"I"]["n"|"N"]["t"|"T"]
 PRINTLN ["p"|"P"]["r"|"R"]["i"|"I"]["n"|"N"]["t"|"T"]["l"|"L"]["n"|"N"]
+
+STRING \"[^\n"]+\"
 
 %s IN_COMMENT
 
@@ -39,7 +39,7 @@ PRINTLN ["p"|"P"]["r"|"R"]["i"|"I"]["n"|"N"]["t"|"T"]["l"|"L"]["n"|"N"]
 {TABUL}           {loc->columns(4);    loc->step();};
 {WS}              {loc->columns(1);    loc->step();};
 {LINE}            {loc->lines(yyleng); loc->step();};
-{I_LOVE_WINDOWS}  {};
+{WINDOWS_R_LINE}  {};
 
 "/*" { BEGIN(IN_COMMENT);}
 <IN_COMMENT>
@@ -85,7 +85,8 @@ PRINTLN ["p"|"P"]["r"|"R"]["i"|"I"]["n"|"N"]["t"|"T"]["l"|"L"]["n"|"N"]
 {TYPE_ID}         {return make_type_id();};
 {DIGIT1}{DIGIT}*  {return make_num();};
 {DIGIT}           {return make_num();};
-{STRING}          {return make_string();};
+
+{STRING}          {return make_string();}
 .			      {return make_err();};
 
 

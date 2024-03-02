@@ -127,6 +127,7 @@ class driver_t
                                 case ptt::OR:        std::cout << "OR";            break;
                                 case ptt::TRUE:      std::cout << "TRUE";          break;
                                 case ptt::FALSE:     std::cout << "FALSE";         break;
+                                case ptt::STRING:    std::cout << "STRING";        break;
                                 case ptt::ERR:       std::cout << "You have some syntax errors:"; break;  
                                 case 0:                                             break;     
                                 default:             std::cout << "UNKOWN TOKEN!";  break;        
