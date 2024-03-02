@@ -159,7 +159,7 @@ comp: expr EQUAL     expr {}
 ;
 
 expr: NUMBER           {}
-    | STRING           {}
+    | STRING       {}
     | ID               {}
     | TYPE_ID     expr {}
     | expr PLUS   expr {}

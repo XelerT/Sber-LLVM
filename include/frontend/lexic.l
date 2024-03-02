@@ -24,7 +24,9 @@ WHILE   ["w"|"W"]["h"|"H"]["i"|"I"]["l"|"L"]["e"|"E"]
 PRINT   ["p"|"P"]["r"|"R"]["i"|"I"]["n"|"N"]["t"|"T"]
 PRINTLN ["p"|"P"]["r"|"R"]["i"|"I"]["n"|"N"]["t"|"T"]["l"|"L"]["n"|"N"]
 
-STRING \"[^\n"]+\"
+STRING \"[^\n"]*\"
+
+LINE_COMMENT [/][/]
 
 %s IN_COMMENT
 
@@ -50,6 +52,8 @@ STRING \"[^\n"]+\"
     "*"    
     \n        yylineno++;
 }
+
+{LINE_COMMENT}.*\n
 
 "+"               {return make_plus();};
 "-"               {return make_minus();};
